@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BF SUMA - Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <img src="logo.jpeg" alt="BF SUMA Logo" class="login-logo">
+                <h1>Admin Dashboard</h1>
+                <p>Enter your credentials to access the admin panel</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="dashboard" class="dashboard-container" style="display: none;">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="admin-header-content">
+                <div class="admin-logo-section">
+                    <img src="logo.jpeg" alt="BF SUMA Logo" class="admin-logo">
+                    <h1>BF SUMA Admin Dashboard</h1>
+                </div>
+                <div class="admin-header-actions">
+                    <a href="index.html" class="view-site-btn" target="_blank">View Site</a>
+                    <button class="logout-btn" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Sidebar Navigation -->
+            <aside class="admin-sidebar">
+                <nav class="admin-nav">
+                    <button class="nav-item active" data-section="orders">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        </svg>
+                        <span>Orders</span>
+                        <span class="badge" id="ordersBadge">0</span>
+                    </button>
+                    <button class="nav-item" data-section="products">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                        <span>Products</span>
+                    </button>
+                    <button class="nav-item" data-section="discounts">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v6l4 2"></path>
+                        </svg>
+                        <span>Discounts</span>
+                    </button>
+                    <button class="nav-item" data-section="news">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <span>News & Updates</span>
+                    </button>
+                </nav>
+            </aside>
+
+            <!-- Content Area -->
+            <div class="admin-content">
+                <!-- Orders Section -->
+                <section id="ordersSection" class="admin-section active">
+                    <div class="section-header">
+                        <h2>Order Management</h2>
+                        <div class="section-actions">
+                            <button class="btn-secondary" id="refreshOrders">Refresh</button>
+                            <button class="btn-secondary" id="exportOrders">Export CSV</button>
+                        </div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon orders-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalOrders">0</h3>
+                                <p>Total Orders</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon pending-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 6v6l4 2"></path>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="pendingOrders">0</h3>
+                                <p>Pending</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon completed-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="completedOrders">0</h3>
+                                <p>Completed</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon revenue-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalRevenue">TZS 0</h3>
+                                <p>Total Revenue</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="orders-table-container">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Items</th>
+                                    <th>Total</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <tr>
+                                    <td colspan="7" class="empty-state">No orders yet</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Products Section -->
+                <section id="productsSection" class="admin-section">
+                    <div class="section-header">
+                        <h2>Product Management</h2>
+                        <button class="btn-primary" id="addProductBtn">+ Add New Product</button>
+                    </div>
+                    <div class="products-grid-admin">
+                        <div id="productsList" class="products-list">
+                            <!-- Products will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Discounts Section -->
+                <section id="discountsSection" class="admin-section">
+                    <div class="section-header">
+                        <h2>Discount Management</h2>
+                        <button class="btn-primary" id="addDiscountBtn">+ Add New Discount</button>
+                    </div>
+                    <div class="discounts-list" id="discountsList">
+                        <!-- Discounts will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- News & Updates Section -->
+                <section id="newsSection" class="admin-section">
+                    <div class="section-header">
+                        <h2>News & Updates Management</h2>
+                        <button class="btn-primary" id="addNewsBtn">+ Add New Update</button>
+                    </div>
+                    <div class="news-list" id="newsList">
+                        <!-- News items will be loaded here -->
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add/Edit Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="productModalTitle">Add New Product</h2>
+                <button class="modal-close" id="closeProductModal">&times;</button>
+            </div>
+            <form id="productForm" class="modal-form">
+                <div class="form-group">
+                    <label for="productName">Product Name *</label>
+                    <input type="text" id="productName" name="productName" required>
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">Category *</label>
+                    <select id="productCategory" name="productCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="joints">Joints and Bones Nutritions</option>
+                        <option value="skin">Skin Nutritions</option>
+                        <option value="reproductive">Reproductive System Nutritions</option>
+                        <option value="digestive">Digestive System Nutritions</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Price (TZS) *</label>
+                    <input type="number" id="productPrice" name="productPrice" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription" name="productDescription" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="productImage">Image URL</label>
+                    <input type="text" id="productImage" name="productImage" placeholder="example: Anatic Herbal Soap.jpeg">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelProductBtn">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit Discount Modal -->
+    <div id="discountModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="discountModalTitle">Add New Discount</h2>
+                <button class="modal-close" id="closeDiscountModal">&times;</button>
+            </div>
+            <form id="discountForm" class="modal-form">
+                <div class="form-group">
+                    <label for="discountTitle">Discount Title *</label>
+                    <input type="text" id="discountTitle" name="discountTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="discountType">Type *</label>
+                    <select id="discountType" name="discountType" required>
+                        <option value="discount">Discount</option>
+                        <option value="stock">New Stock</option>
+                        <option value="update">Company Update</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="discountDescription">Description *</label>
+                    <textarea id="discountDescription" name="discountDescription" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="discountDate">Date *</label>
+                    <input type="date" id="discountDate" name="discountDate" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelDiscountBtn">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Discount</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit News Modal -->
+    <div id="newsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="newsModalTitle">Add News & Update</h2>
+                <button class="modal-close" id="closeNewsModal">&times;</button>
+            </div>
+            <form id="newsForm" class="modal-form">
+                <div class="form-group">
+                    <label for="newsTitle">Title *</label>
+                    <input type="text" id="newsTitle" name="newsTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="newsType">Type *</label>
+                    <select id="newsType" name="newsType" required>
+                        <option value="discount">Discount</option>
+                        <option value="stock">New Stock</option>
+                        <option value="update">Company Update</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="newsDescription">Description *</label>
+                    <textarea id="newsDescription" name="newsDescription" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="newsDate">Date *</label>
+                    <input type="date" id="newsDate" name="newsDate" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelNewsBtn">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="orderDetailsModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2>Order Details</h2>
+                <button class="modal-close" id="closeOrderDetailsModal">&times;</button>
+            </div>
+            <div id="orderDetailsContent" class="order-details-content">
+                <!-- Order details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>
+
